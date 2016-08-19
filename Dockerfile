@@ -6,11 +6,12 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update
 
 # Install php5 latest
-RUN apt-get -y install python-software-properties
-RUN add-apt-repository -y ppa:ondrej/php5-oldstable
+RUN apt-get -y install wget
+RUN wget -O - http://repos.servergrove.com/servergrove-ubuntu-precise/servergrove-ubuntu-precise.gpg.key | apt-key add -
+RUN echo 'deb http://repos.servergrove.com/servergrove-ubuntu-precise precise main' >> /etc/apt/sources.list
 RUN apt-get update
 
-RUN apt-get -y install supervisor git apache2 libapache2-mod-php5 mysql-server php5-mysql pwgen php-apc php5-mcrypt && \
+RUN apt-get -y install supervisor git apache2-mpm-prefork php55-mod-php mysql-server pwgen libjpeg8 php55-apcu && \
   echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # Add image configuration and scripts
